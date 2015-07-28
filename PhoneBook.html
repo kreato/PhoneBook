@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Phone Book</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <table id="phonebook">
+        <tr>
+            <th>Phone Number</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Gender</th>
+            <th>Options</th>
+        </tr>
+    </table>
+    <div id="buttons">
+        <button class="button" type="button" name="button" id="add" onclick="location.href='links/AddContact.html';">Add contact</button>
+        <button class="button" type="button" name="button" id="import" onclick="location.href='links/Import.html';">Import contacts</button>
+    </div>
+    <script src="script/script.js"></script>
+    <script>updateTable()</script>
+</body>
+
+</html>

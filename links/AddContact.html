@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Add Contact</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="form">
+		<form action="Adding.html" name="input" method="post" onsubmit="return checkForm()">
+			<label for="phone">Phone number:</label>
+			<br>
+			<input type="text" id="phone" name="phoneNumber" placeholder="ex: +98888888889 or 012345" autofocus="autofocus" />
+			<br>
+			<label for="name">Name:</label>
+			<br>
+			<input type="text" id="name" name="name" placeholder="ex: Pesho Peshev" />
+			<br>
+			<label for="city">City:</label>
+			<br>
+			<input type="text" id="city" name="city" placeholder="ex: Sofia" />
+			<br>
+			<label>Gender:</label>
+			<br>
+			<div class="radios">
+				<span class="radio">
+					<input type="radio" name="gender" id="male" value="м"/>
+					<label for="male">Male</label>
+				</span>
+				<span class="radio">
+					<input type="radio" name="gender" id="female" value="ж" />
+					<label for="female">Female</label>
+				</span>
+			</div>
+			<br>
+			<label>Zodiac sign:</label>
+			<br>
+			<select name="signs" id="signs">
+				<option value="0">------------</option>
+				<option value="Овен">Aries</option>
+				<option value="Телец">Taurus</option>
+				<option value="Близнаци">Gemini</option>
+				<option value="Рак">Cancer</option>
+				<option value="Лъв">Leo</option>
+				<option value="Дева">Virgo</option>
+				<option value="Везни">Libra</option>
+				<option value="Скорпион">Scorpio</option>
+				<option value="Стрелец">Sagittarius</option>
+				<option value="Козирог">Capricorn</option>
+				<option value="Водолей">Aquarius</option>
+				<option value="Риби">Pisces</option>
+			</select>
+			<br>
+			<label for="notes">Notes:</label>
+			<br>
+			<textarea name="notes" id="notes" cols="30" rows="10"></textarea>
+			<br>
+			<button class="button" id="addContact" type="submit" name="submit">Add Contact</button>
+			<button class="button" id="backBtn" type="button" name="back" id="back" onclick="location.href='../PhoneBook.html';">Back</button>
+		</form>
+	</div>
+	<script src="../script/script.js"></script>
+	<script>fill()</script>
+</body>
+
+</html>
