@@ -1,23 +1,18 @@
-var phone = document.getElementById('phone'),
-	fullName = document.getElementById('name'),
-	city = document.getElementById('city'),
-	male = document.getElementById('male'),
-	female = document.getElementById('female'),
-	zodiacSign = document.getElementById('signs'),
-	notes = document.getElementById('notes'),
-	vphone = document.getElementById('vphone'),
-	vfullName = document.getElementById('vname'),
-	vcity = document.getElementById('vcity'),
-	vgender = document.getElementById('vgender'),
-	vsign = document.getElementById('vsign'),
-	vnotes = document.getElementById('vnotes'),
-	table = document.getElementById('phonebook'),
-	text = document.getElementById('importContacts'),
+var phone,
+	fullName,
+	city,
+	male,
+	female,
+	zodiacSign,
+	notes,
+	table,
+	text,
 	entry,
 	validator = {
 		validatePhone: function (str) {
 			var i,
-				len;
+				len,
+				trimedStr = str.trim();
 
 			if (str == null || str == '') {
 				alert("Phone number must be filled out");
@@ -29,7 +24,7 @@ var phone = document.getElementById('phone'),
 				return true;
 			}
 
-			if (str.length < 5 || str.length > 12) {
+			if (trimedStr.length < 5 || trimedStr.length > 12) {
 				alert('Phone number\'s length must be between 5 and 12');
 				return true;
 			}
@@ -72,29 +67,24 @@ var phone = document.getElementById('phone'),
 		}
 	};
 
-function isValidNum(num){
-	if (num == undefined) {
-		return false;
-	}
-	for(var key in localStorage){
-		if (key === num + ''){
-			return false;
-		}
-	}
-	return true;
-}
-
-function id(){
-	for (var i = 0; i < 10000; i += 1){
-		if(isValidNum(i)){
-			return i;
-		}
-	}
+function add(){
+	var counter = 0;
+    function plus() {counter += 1;}
+    plus();
+    return counter;
 }
 
 function checkForm() {
 
 	var fieldsWithContent = '';
+
+	phone = document.getElementById('phone');
+	fullName = document.getElementById('name');
+	city = document.getElementById('city');
+	male = document.getElementById('male');
+	female = document.getElementById('female');
+	zodiacSign = document.getElementById('signs');
+	notes = document.getElementById('notes');
 
 	if (validator.validatePhone(phone.value)) {
 		return false;
@@ -114,11 +104,11 @@ function checkForm() {
 
 		for (var key in localStorage) {
 			var info = localStorage.getItem(key).split('\t');
-			if (key !== 'cf' && info[0] === phone.value) {
+			if (key !== 'cf' && info[0] === phone.value.trim()) {
 				alert('Duplicate numbers are not allowed')
 				return false;
 			}
-			if (key !== 'cf' && info[1] === fullName.value) {
+			if (key !== 'cf' && info[1] === fullName.value.trim()) {
 				alert('Duplicate names are not allowed')
 				return false;
 			}
@@ -128,11 +118,11 @@ function checkForm() {
 		zodiacSign.value === '0' ? fieldsWithContent += 'f' : fieldsWithContent += 't';
 		notes.value === '' ? fieldsWithContent += 'f' : fieldsWithContent += 't';
 
-		entry = '' + phone.value + '\t' + fullName.value + '\t' + city.value + '\t' + (male.checked ? 'м' : 'ж') +
+		entry = '' + phone.value.trim() + '\t' + fullName.value.trim() + '\t' + city.value + '\t' + (male.checked ? 'м' : 'ж') +
 		'\t' + zodiacSign.value + '\t' + notes.value + '\t' + fieldsWithContent;
-		
+
 		if (localStorage.i === '') {
-			localStorage.setItem(id() + '', entry);
+			localStorage.setItem(phone.value + '', entry);
 		} else {
 			localStorage.setItem(localStorage.i + '', entry);
 		}
@@ -188,6 +178,7 @@ function getInnerHtmlCodeForPhoneBookEntry(infoStr, id) {
 }
 
 function updateTable() {
+	table = document.getElementById('phonebook');
 	localStorage.setItem('cf', '');
 	localStorage.setItem('nf', '');
 	localStorage.setItem('i', '');
@@ -207,7 +198,7 @@ function updateTable() {
 	for (var i = 0; i < buttonsCount; i += 1) {
 		buttons[i].onclick = function () {
 			if (confirm('Are you sure you want to delete this contact?')) {
-				
+
 				localStorage.removeItem(this.id + '');
 				window.location = 'PhoneBook.html';
 				return true
@@ -247,7 +238,16 @@ function updateTable() {
 
 function fillEditSheet(content) {
 
+	phone = document.getElementById('phone');
+	fullName = document.getElementById('name');
+	city = document.getElementById('city');
+	male = document.getElementById('male');
+	female = document.getElementById('female');
+	zodiacSign = document.getElementById('signs');
+	notes = document.getElementById('notes');
+
 	content = content.split('\t');
+
 	var fill = content[content.length - 1].split('');
 	var index = 0;
 
@@ -257,14 +257,14 @@ function fillEditSheet(content) {
 	index += 1;
 	if (fill[0] === 't') {
 		city.value = content[index];
-		
+
 	}
 	index += 1;
 	content[index] === 'м' ? male.checked = true : female.checked = true;
 	index += 1;
 	if (fill[1] === 't') {
 		zodiacSign.value = content[index];
-		
+
 	}
 	index += 1;
 	if (fill[2] === 't') {
@@ -273,28 +273,35 @@ function fillEditSheet(content) {
 }
 
 function fillViewSheet(content) {
+	phone = document.getElementById('vphone'),
+	fullName = document.getElementById('vname'),
+	city = document.getElementById('vcity'),
+	gender = document.getElementById('vgender'),
+	sign = document.getElementById('vsign'),
+	notes = document.getElementById('vnotes'),
+
 	content = content.split('\t');
 
 	var fill = content[content.length - 1].split('');
 	var index = 0;
 
-	vphone.innerHTML = content[index];
+	phone.innerHTML = content[index];
 	index += 1;
-	vfullName.innerHTML = content[index];
+	fullName.innerHTML = content[index];
 	index += 1;
 	if (fill[0] === 't') {
-		vcity.innerHTML = content[index];
+		city.innerHTML = content[index];
 	}
 	index += 1;
-	vgender.innerHTML = content[index];
+	gender.innerHTML = content[index];
 	index += 1;
 	if (fill[1] === 't') {
-		vsign.innerHTML = content[index];
+		sign.innerHTML = content[index];
 	}
-	
+
 	index += 1;
 	if (fill[2] === 't') {
-		vnotes.innerHTML = content[index];
+		notes.innerHTML = content[index];
 	}
 
 }
@@ -348,37 +355,129 @@ function viewFill() {
 
 
 function importD() {
+	text = document.getElementById('importContacts')
 	localStorage.setItem('cf', '');
 	localStorage.setItem('nf', '');
 	localStorage.setItem('i', '');
 	var data = text.value.split('\n');
+
+	for (var i = 0; i < data.length; i++) {
+		if (data[i] === '') {
+			alert('Empty entries are not allowed');
+			return false;
+		}
+	}
 	for (var j in data) {
 		createEntry(data[j]);
 	}
-	window.location = 'Adding.html';
+
 }
 
 function createEntry(entry) {
-	var t = entry;
-	var count = t.split('\t');
 
-	t += '\tt';
-	count[4] === '' ? t += 'f' : t += 't';
-	count[5] === '' ? t += 'f' : t += 't';
+	var text = entry;
+	var elements = text.split('\t');
+	editedEntry = '';
 
-
-	localStorage.setItem(id() + '', t);
-}
-
-var count = 3;
-var redirect = '../PhoneBook.html'
-
-function countDown() {
-	if (count <= 0) {
-		window.location = redirect;
-	} else {
-		count--;
-		document.getElementById("timer").innerHTML = "This page will redirect in " + count + " seconds.";
-		setTimeout("countDown()", 1000);
+	if (elements.length < 3) {
+		alert('Phone number, name and gender are requiered!')
+		return false;
 	}
+
+	if (validator.validatePhone(elements[0])) {
+		return false;
+	}
+	if (validator.validateName(elements[1])) {
+		return false;
+	}
+
+	for (var key in localStorage) {
+		var info = localStorage.getItem(key).split('\t');
+		if (key !== 'cf' && info[0] === elements[0]) {
+			alert('Duplicate numbers are not allowed')
+			return false;
+		}
+		if (key !== 'cf' && info[1] === elements[1]) {
+			alert('Duplicate names are not allowed')
+			return false;
+		}
+	}
+
+	editedEntry += elements[0] + '\t';
+	editedEntry += elements[1] + '\t';
+
+	if (elements[2] === 'м' || elements[2] === 'ж') {
+		editedEntry += '' + '\t';
+		editedEntry +=  elements[2] + '\t';
+
+		if (elements[3] === 'Овен' || elements[3] === 'Телец' ||
+			elements[3] === 'Близнаци' || elements[3] === 'Рак' ||
+			elements[3] === 'Лъв' || elements[3] === 'Дева' ||
+			elements[3] === 'Везни' || elements[3] === 'Скорпион' ||
+			elements[3] === 'Стрелец' || elements[3] === 'Козирог' ||
+			elements[3] === 'Водолей' || elements[3] === 'Риби') {
+			editedEntry += elements[3];
+			editedEntry += '\t'
+		} else {
+			editedEntry += '0';
+			editedEntry += '\t';
+			if (elements[3] !== undefined) {
+				editedEntry += elements[3];
+			} else {
+				editedEntry += '';
+			}
+		}
+
+		if (elements[4] === undefined) {
+			editedEntry += '';
+		} else {
+			editedEntry += elements[4];
+		}
+
+	} else {
+		if (validator.validateCity(elements[2])) {
+			return false;
+		}
+		editedEntry += elements[2] + '\t';
+		if (elements[3] !== 'м' && elements[3] !== 'ж') {
+			alert('You must enter a gender(м or ж)!');
+			return false;
+		} else {
+			editedEntry += elements[3];
+			editedEntry += '\t';
+		}
+		if (elements[4] === 'Овен' || elements[4] === 'Телец' ||
+			elements[4] === 'Близнаци' || elements[4] === 'Рак' ||
+			elements[4] === 'Лъв' || elements[4] === 'Дева' ||
+			elements[4] === 'Везни' || elements[4] === 'Скорпион' ||
+			elements[4] === 'Стрелец' || elements[4] === 'Козирог' ||
+			elements[4] === 'Водолей' || elements[4] === 'Риби') {
+			editedEntry += elements[4];
+			editedEntry += '\t'
+		} else {
+			editedEntry += '0';
+			editedEntry += '\t';
+			if (elements[4] !== undefined) {
+				editedEntry+= elements[4];
+			} else {
+				editedEntry += '';
+			}
+		}
+
+		if (elements[5] === undefined) {
+			editedEntry += '';
+		} else {
+			editedEntry += elements[5];
+		}
+	}
+
+	var splitedEntry = editedEntry.split('\t');
+
+	splitedEntry[2] === '' ? editedEntry += '\tf' : editedEntry += '\tt';
+	splitedEntry[4] === '0' ? editedEntry += 'f' : editedEntry += 't';
+	splitedEntry[5] === '' ? editedEntry += 'f' : editedEntry += 't';
+
+	localStorage.setItem(elements[0] + '', editedEntry);
+
+	window.location = '../PhoneBook.html';
 }
