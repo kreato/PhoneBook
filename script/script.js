@@ -67,13 +67,6 @@ var phone,
 		}
 	};
 
-function add(){
-	var counter = 0;
-    function plus() {counter += 1;}
-    plus();
-    return counter;
-}
-
 function checkForm() {
 
 	var fieldsWithContent = '';
@@ -121,11 +114,7 @@ function checkForm() {
 		entry = '' + phone.value.trim() + '\t' + fullName.value.trim() + '\t' + city.value + '\t' + (male.checked ? 'м' : 'ж') +
 		'\t' + zodiacSign.value + '\t' + notes.value + '\t' + fieldsWithContent;
 
-		if (localStorage.i === '') {
-			localStorage.setItem(phone.value + '', entry);
-		} else {
-			localStorage.setItem(localStorage.i + '', entry);
-		}
+		localStorage.setItem(fullName.value + '', entry);
 
 		return true;
 	}
@@ -477,7 +466,7 @@ function createEntry(entry) {
 	splitedEntry[4] === '0' ? editedEntry += 'f' : editedEntry += 't';
 	splitedEntry[5] === '' ? editedEntry += 'f' : editedEntry += 't';
 
-	localStorage.setItem(elements[0] + '', editedEntry);
+	localStorage.setItem(elements[1] + '', editedEntry);
 
 	window.location = '../PhoneBook.html';
 }
