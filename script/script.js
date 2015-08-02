@@ -472,6 +472,9 @@ var module = (function() {
                     if (elements[4] === undefined) {
                         editedEntry += '';
                     } else {
+                        if (validator.validateNotes(elements[4])) {
+                            return false;
+                        }
                         editedEntry += elements[4];
                     }
 
@@ -508,6 +511,9 @@ var module = (function() {
                     if (elements[5] === undefined) {
                         editedEntry += '';
                     } else {
+                        if (validator.validateNotes(elements[5])) {
+                            return false;
+                        }
                         editedEntry += elements[5];
                     }
                 }
