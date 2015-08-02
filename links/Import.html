@@ -11,11 +11,31 @@
  	<textarea id="importContacts" cols="130" rows="30" placeholder="Here you can make multiple entries. All entries must be separeted by new line. Each entry must be separeted by TAB in the following order: phone number, name, city, gender, zodiac sign and notes. Empty entries are not allowed"></textarea>
 	 <br>
 	 <div id="importBtn">
-		 <button class="button" id="importData" type="button" name="submit" onclick="importD()">Import Contacts</button>
+		 <button class="button" id="importData" type="button" name="submit" onclick="module.manageImportPage()">Import Contacts</button>
 		 <button class="button" type="button" onclick="location.href='../PhoneBook.html'">Back</button>
 	 </div>
 	<script src="../script/script.js"></script>
-	<script></script>
+	<script>
+    document.querySelector("textarea").addEventListener('keydown', function(e) {
+        if (e.keyCode === 9) { // tab was pressed
+            // get caret position/selection
+            var start = this.selectionStart;
+            var end = this.selectionEnd;
+
+            var target = e.target;
+            var value = target.value;
+
+            // set textarea value to: text before caret + tab + text after caret
+            target.value = value.substring(0, start) + "\t" + value.substring(end);
+
+            // put caret at right position again (add one for the tab)
+            this.selectionStart = this.selectionEnd = start + 1;
+
+            // prevent the focus lose
+            e.preventDefault();
+        }
+    }, false);
+    </script>
 </body>
 
 </html>

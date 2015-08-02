@@ -85,7 +85,7 @@ body {
 
 .editBtn {
     background-color: #A7C942;
-    border-color: #98bf21;    
+    border-color: #98bf21;
 }
 
 .deleteBtn{
@@ -103,7 +103,7 @@ input[type=text], textarea, select {
   margin: 5px 1px 3px 0px;
   border: 1px solid #DDDDDD;
 }
- 
+
 input[type=text]:focus, textarea:focus, select:focus, radio:focus {
   box-shadow: 0 0 5px rgba(81, 203, 238, 1);
   padding: 3px 0px 3px 3px;

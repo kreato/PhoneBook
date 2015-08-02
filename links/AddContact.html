@@ -9,7 +9,7 @@
 
 <body>
     <div id="form">
-		<form action="../PhoneBook.html" name="input" method="post" onsubmit="return checkForm()">
+		<form action="../PhoneBook.html" name="input" method="post" onsubmit="return module.manageValidation()">
 			<label for="phone">Phone number:</label>
 			<br>
 			<input type="text" id="phone" name="phoneNumber" placeholder="ex: +98888888889 or 012345" autofocus="autofocus" />
@@ -62,7 +62,7 @@
 		</form>
 	</div>
 	<script src="../script/script.js"></script>
-	<script>fill()</script>
+	<script>module.manageEditPage()</script>
 </body>
 
 </html>
